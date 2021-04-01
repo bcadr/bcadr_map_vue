@@ -55,6 +55,7 @@ export function initDrawLayer(map) {
             let geom = sketch.getGeometry();
             if (geom instanceof Polygon) {
                 if (lastPolygonLabelFeature) {
+                    console.log(lastPolygonLabelFeature);
                     //鼠标移动 不停的添加和删除
                     drawSource.removeFeature(
                         lastPolygonLabelFeature
@@ -236,8 +237,7 @@ function addInteraction(drawType, map) {
                         output = formatLength(geom);
                     }
                 });
-        },
-        this
+        }
     );
     draw.on(
         "drawend",
@@ -245,8 +245,7 @@ function addInteraction(drawType, map) {
             sketch = null;
             unByKey(listener);
             output = "0";
-        },
-        this
+        }
     );
 }
 
