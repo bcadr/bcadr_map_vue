@@ -4,7 +4,7 @@
 
 ​		[bcadr_map_vue](http://www.bcadr.cn)是美丽华夏大数据研究院基于开源框架vue和openlayers开发的一款二维在线GIS应用程序。在多源数据加载、二维空间分析以及多种可视化效果等功能的支撑下，用户可以进行开箱即用的进行二维地图操作。
 
-​		在线预览访问地址：[bcadr_map_vue](http://www.bcadr.cn)
+​		在线预览访问地址：[bcadr_map_vue](http://gis_vue_2d.bcadr.cn/)
 
 # 一、开始
 
