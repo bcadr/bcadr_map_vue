@@ -121,7 +121,8 @@ export function addEcharts(map) {
         '韶关': [113.7964, 24.7028]
     };
 
-    const BJData = [
+
+    const BJData= [
         [{ name: '北京' }, { name: '上海', value: 95 }],
         [{ name: '北京' }, { name: '广州', value: 90 }],
         [{ name: '北京' }, { name: '大连', value: 80 }],
@@ -287,66 +288,7 @@ export function addEcharts(map) {
         series: series
     };
 
-    class ELayer extends EChartsLayer {
-        constructor(chartOptions, options, map) {
-            super(chartOptions, options, map);
-            this.mouseMove = this.mouseMove.bind(this);
-        }
-
-        bindEvent(map) {
-            super.bindEvent(map);
-            if (this._options.polyfillEvents) {
-                map.on("pointermove", this.mouseMove);
-            }
-        }
-        unBindEvent() {
-            super.unBindEvent();
-            if (this._options.polyfillEvents) {
-                map.un("pointermove", this.mouseMove);
-            }
-            this._initEvent = false;
-        }
-        mouseMove(event) {
-            console.log("11111");
-            if (this.$chart) {
-                let target = event.originalEvent.target;
-                while (target) {
-                    if (target.className === "ol-overlaycontainer-stopevent") {
-                        this.$chart
-                            .getZr()
-                            .painter.getViewportRoot()
-                            .dispatchEvent(mockEvent("mousemove", event));
-                        return;
-                    }
-                    target = target.parentElement;
-                }
-            }
-        }
-    }
-
-    function mockEvent(type, event) {
-        let e = new MouseEvent(type, {
-            bubbles: true,
-            button: event.pointerEvent.button,
-            buttons: event.pointerEvent.buttons,
-            clientX: event.pointerEvent.clientX,
-            clientY: event.pointerEvent.clientY,
-            zrX: event.pointerEvent.offsetX,
-            zrY: event.pointerEvent.offsetY,
-            movementX: event.pointerEvent.movementX,
-            movementY: event.pointerEvent.movementY,
-            relatedTarget: event.pointerEvent.relatedTarget,
-            screenX: event.pointerEvent.screenX,
-            screenY: event.pointerEvent.screenY,
-            view: window
-        });
-        e.zrX = event.pointerEvent.offsetX;
-        e.zrY = event.pointerEvent.offsetY;
-        e.event = e;
-        return e;
-    }
-
-    echartslayer = new ELayer(echartsOptions, {
+    echartslayer = new EChartsLayer(echartsOptions, {
         hideOnZooming: true,
         stopEvent: true,
         insertFirst: false, 

@@ -90,6 +90,7 @@ function updateView(map,voronoiData) {
     };
 
     let styleFunction = function (feature) {
+        console.log(feature.getGeometry().getType());
         return styles[feature.getGeometry().getType()];
     };
 

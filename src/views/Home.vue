@@ -5,7 +5,9 @@
             <div class="my-scale-line"></div>
         </div>
         <div class="panels">
-            <a-button @click="addPlane"  :disabled="isDisabledPlane">加载迁徙图</a-button>
+            <a-button @click="addPlane" :disabled="isDisabledPlane"
+                >加载迁徙图</a-button
+            >
             <a-button @click="delPlane">关闭迁徙图</a-button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a-button @click="mDistance">测距</a-button>
@@ -17,17 +19,25 @@
             <a-button @click="addPolygonBuffer">面缓冲区分析</a-button>
             <a-button @click="delBuffer">清除缓冲区</a-button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a-button @click="addVoronoi"  :disabled="isDisabledVoronoi">泰森多边形</a-button>
+            <a-button @click="addVoronoi" :disabled="isDisabledVoronoi"
+                >泰森多边形</a-button
+            >
             <a-button @click="delVoronoi">清除泰森多边形</a-button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a-button @click="addRoadAnalysis" :disabled="isDisabledRoad">道路分析</a-button>
+            <a-button @click="addRoadAnalysis" :disabled="isDisabledRoad"
+                >道路分析</a-button
+            >
             <a-button @click="delRoadAnalysis">取消道路分析</a-button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a-button @click="addPoint">绘制点</a-button
+            >
+            <a-button @click="delPoint">退出绘制</a-button>
         </div>
     </div>
 </template>
 
 <script>
-import {initMap} from "../utils/mapUtils/map.js";
+import { initMap } from "../utils/mapUtils/map.js";
 import { addEcharts, delEcharts } from "../utils/mapUtils/echarts/index.js";
 import {
     initDrawLayer,
@@ -46,7 +56,9 @@ import {
     delVoronoiLayer,
 } from "../utils/mapUtils/turf/voronoi.js";
 import { addRoad, delRoad } from "../utils/mapUtils/road/road.js";
-import {viewFlyToBcadr} from "../utils/mapUtils/common/flyTo.js"
+import { viewFlyToBcadr } from "../utils/mapUtils/common/flyTo.js";
+
+import {addInteractions,removeInteraction} from "../utils/mapUtils/tools/vectorLabel.js"
 
 export default {
     name: "Home",
@@ -57,7 +69,7 @@ export default {
             isDisabledRoad: false,
             isDisabledPlane: false,
             isDisabledVoronoi: false,
-            roadTimer: null
+            roadTimer: null,
         };
     },
     components: {},
@@ -120,6 +132,12 @@ export default {
             delRoad(this.map);
             this.isDisabledRoad = false;
         },
+        addPoint() {
+            addInteractions(this.map);
+        },
+        delPoint() {
+            removeInteraction(this.map);
+        }
     },
 };
 </script>
