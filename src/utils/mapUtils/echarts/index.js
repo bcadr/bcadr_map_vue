@@ -289,11 +289,9 @@ export function addEcharts(map) {
     };
 
     echartslayer = new EChartsLayer(echartsOptions, {
-        hideOnZooming: true,
-        stopEvent: true,
-        insertFirst: false, 
-        hideOnMoving: true,
-        polyfillEvents: false
+        hideOnMoving: false,
+        hideOnZooming: false,
+        forcedPrecomposeRerender: true
     });
     echartslayer.appendTo(map);
 }
