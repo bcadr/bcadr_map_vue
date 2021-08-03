@@ -32,6 +32,10 @@
             <a-button @click="addPoint">绘制点</a-button
             >
             <a-button @click="delPoint">退出绘制</a-button>
+            <a-button @click="addCluster">添加聚合图层</a-button
+            >
+            <a-button @click="delCluster">删除聚合图层</a-button>
+
         </div>
     </div>
 </template>
@@ -59,6 +63,8 @@ import { addRoad, delRoad } from "../utils/mapUtils/road/road.js";
 import { viewFlyToBcadr } from "../utils/mapUtils/common/flyTo.js";
 
 import {addInteractions,removeInteraction} from "../utils/mapUtils/tools/vectorLabel.js"
+
+import {addClusterLayer,delClusterLayer} from '../utils/mapUtils/extention/cluster.js'
 
 export default {
     name: "Home",
@@ -137,6 +143,12 @@ export default {
         },
         delPoint() {
             removeInteraction(this.map);
+        },
+        addCluster() {
+            addClusterLayer();
+        },
+        delCluster() {
+            delClusterLayer();
         }
     },
 };

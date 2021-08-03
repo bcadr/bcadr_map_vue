@@ -8,7 +8,7 @@ import Point from 'ol/geom/Point';
 
 import marker from '@/assets/images/map/marker.png'
 let clusterSource;
-console.log(marker)
+let clusterLayer;
 
 // Addfeatures to the cluster
 function addFeatures(nb) {
@@ -75,7 +75,7 @@ export function addClusterLayer() {
         source: new VectorSource()
     });
     // Animated cluster layer
-    var clusterLayer = new AnimatedCluster({
+    clusterLayer = new AnimatedCluster({
         name: 'Cluster',
         source: clusterSource,
         // animationDuration: document.getElementById("#animatecluster").prop('checked') ? 700 : 0,
@@ -87,84 +87,6 @@ export function addClusterLayer() {
     addFeatures(2000);
 }
 
-
-// Style for selection
-/* var img = new Circle({
-    radius: 5,
-    stroke: new Stroke({
-        color: "rgba(0,255,255,1)",
-        width: 1
-    }),
-    fill: new Fill({
-        color: "rgba(0,255,255,0.3)"
-    })
-});
-var style0 = new Style({
-    image: img
-});
-var style1 = new Style({
-    image: img,
-    // Draw a link beetween points (or not)
-    stroke: new Stroke({
-        color: "#fff",
-        width: 1
-    })
-}); */
-// Select interaction to spread cluster out and select features
-/* var selectCluster = new ol.interaction.SelectCluster({
-    // Point radius: to calculate distance between the features
-    pointRadius: 7,
-    // circleMaxObjects: 40,
-    // spiral: false,
-    animate: $("#animatesel").prop('checked'),
-    // Feature style when it springs apart
-    featureStyle: function () {
-        return [$("#haslink").prop('checked') ? style1 : style0]
-    },
-    // selectCluster: false,	// disable cluster selection
-    // Style to draw cluster when selected
-    style: function (f, res) {
-        var cluster = f.get('features');
-        if (cluster.length > 1) {
-            var s = [getStyle(f, res)];
-            if ($("#convexhull").prop("checked") && ol.coordinate.convexHull) {
-                var coords = [];
-                for (i = 0; i < cluster.length; i++) coords.push(cluster[i].getGeometry().getFirstCoordinate());
-                var chull = ol.coordinate.convexHull(coords);
-                s.push(new Style({
-                    stroke: new Stroke({ color: "rgba(0,0,192,0.5)", width: 2 }),
-                    fill: new Fill({ color: "rgba(0,0,192,0.3)" }),
-                    geometry: new ol.geom.Polygon([chull]),
-                    zIndex: 1
-                }));
-            }
-            return s;
-        } else {
-            return [
-                new Style({
-                    image: new Circle({
-                        stroke: new Stroke({ color: "rgba(0,0,192,0.5)", width: 2 }),
-                        fill: new Fill({ color: "rgba(0,0,192,0.3)" }),
-                        radius: 5
-                    })
-                })];
-        }
-    }
-});
-window.map.addInteraction(selectCluster); */
-
-// On selected => get feature in cluster and show info
-/* selectCluster.getFeatures().on(['add'], function (e) {
-    var c = e.element.get('features');
-    if (c.length == 1) {
-        var feature = c[0];
-        $(".infos").html("One feature selected...<br/>(id=" + feature.get('id') + ")");
-    } else {
-        $(".infos").text("Cluster (" + c.length + " features)");
-    }
-})
-
-
-selectCluster.getFeatures().on(['remove'], function (e) {
-    $(".infos").html("");
-}) */
+export function delClusterLayer() {
+    window.map.removeLayer(clusterLayer);
+}
