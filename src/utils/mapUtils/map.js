@@ -16,6 +16,7 @@ import * as olCoordinate from 'ol/coordinate';
 import Zoom from 'ol/control/Zoom';
 
 import { TdtLayers, ArcGisLayers } from '../../../public/config/SysConfig';
+import {addClusterLayer} from './extention/cluster.js'
 
 export function initMap() {
     let map = new Map({
@@ -239,6 +240,7 @@ export function initMap() {
     map.on('singleclick', function (e) {
         console.log(olProj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'));
     });
-    
+    window.map = map;
+    addClusterLayer();
     return map;
 }
