@@ -3,12 +3,13 @@ import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { Draw, Snap } from 'ol/interaction';
 import { Vector as VectorSource } from 'ol/source';
 import { Vector as VectorLayer } from 'ol/layer';
-
+import { GeoJSON } from 'ol/format';
+import { saveAs } from 'file-saver';
 /*创建矢量标注
  *@param{object}  data  标注的数据
 */
 
-let draw, snap,drawSource,drawLayer;
+let draw, snap, drawSource, drawLayer;
 export function addInteractions(map) {
     drawSource = new VectorSource();
     drawLayer = new VectorLayer({
@@ -39,10 +40,18 @@ export function addInteractions(map) {
     map.addInteraction(snap);
 }
 
+export function exportJson() {
+    let features = drawSource.getFeatures();
+    let jsonObj = new GeoJSON().writeFeatures(features);
+    // console.log("->GeoJson格式数据：", jsonObj.toString());
+    var blob = new Blob([jsonObj.toString()], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "Point.json");
+}
 /**
  * Handle change event.
  */
 export function removeInteraction(map) {
     map.removeInteraction(draw);
     map.removeInteraction(snap);
+    exportJson();
 }

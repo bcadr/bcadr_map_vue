@@ -15,7 +15,7 @@ import ZoomSlider from 'ol/control/ZoomSlider';
 import * as olCoordinate from 'ol/coordinate';
 import Zoom from 'ol/control/Zoom';
 
-import { TdtLayers, ArcGisLayers } from '../../../public/config/SysConfig';
+import { TdtLayers, ArcGisLayers } from '../../public/config/SysConfig';
 
 
 export function initMap() {

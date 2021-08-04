@@ -41,30 +41,30 @@
 </template>
 
 <script>
-import { initMap } from "../utils/mapUtils/map.js";
-import { addEcharts, delEcharts } from "../utils/mapUtils/echarts/index.js";
+import { initMap } from "../maps/map.js";
+import { addEcharts, delEcharts } from "../maps/echarts/index.js";
 import {
     initDrawLayer,
     measureDistance,
     measureArea,
     measureClear,
-} from "../utils/mapUtils/tools/measure.js";
+} from "../maps/tools/measure.js";
 import {
     pointBuffer,
     lineBuffer,
     polygonBuffer,
     delBuffer,
-} from "../utils/mapUtils/turf/buffer.js";
+} from "../maps/turf/buffer.js";
 import {
     addVoronoiLayer,
     delVoronoiLayer,
-} from "../utils/mapUtils/turf/voronoi.js";
-import { addRoad, delRoad } from "../utils/mapUtils/road/road.js";
-import { viewFlyToBcadr } from "../utils/mapUtils/common/flyTo.js";
+} from "../maps/turf/voronoi.js";
+import { addRoad, delRoad } from "../maps/road/road.js";
+import { viewFlyToBcadr } from "../maps/common/flyTo.js";
 
-import {addInteractions,removeInteraction} from "../utils/mapUtils/tools/vectorLabel.js"
+import {addInteractions,removeInteraction} from "../maps/tools/vectorLabel.js"
 
-import {addClusterLayer,delClusterLayer} from '../utils/mapUtils/extention/cluster.js'
+import {addClusterLayer,delClusterLayer} from '../maps/extention/cluster.js'
 
 export default {
     name: "Home",
