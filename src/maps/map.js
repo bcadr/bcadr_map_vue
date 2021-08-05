@@ -21,7 +21,6 @@ import { TdtLayers, ArcGisLayers } from '../../public/config/SysConfig';
 export function initMap() {
     let map = new Map({
         target: 'map',
-        projection: 'EPSG:3857',
         layers: [
             // 加载ArgGis地图
             new LayerGroup({
@@ -202,7 +201,9 @@ export function initMap() {
             }),
         ],
         view: new View({
-            center: olProj.transform([106.46912, 36.24274], 'EPSG:4326', 'EPSG:3857'),
+            // center: olProj.transform([106.46912, 36.24274], 'EPSG:4326', 'EPSG:3857'),
+            center: [116.53835776024751, 39.76574490815091],
+            projection: 'EPSG:4326',
             zoom: 5.5
         }),
         controls: olControl
@@ -238,7 +239,8 @@ export function initMap() {
 
     map.addControl(layerSwitcher);
     map.on('singleclick', function (e) {
-        console.log(olProj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'));
+        // console.log(olProj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326'));
+        console.log('"lon":' + e.coordinate[0] + ',"lat":' + e.coordinate[1]);
     });
     window.map = map;
     return map;

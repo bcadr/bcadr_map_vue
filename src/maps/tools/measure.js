@@ -56,7 +56,7 @@ export function initDrawLayer(map) {
             if (geom instanceof Polygon) {
                 if (lastPolygonLabelFeature) {
                     // console.log(lastPolygonLabelFeature);
-                    //鼠标移动 不停的添加和删除
+                    //  鼠标移动,不停的添加和删除
                     drawSource.removeFeature(
                         lastPolygonLabelFeature
                     );
@@ -67,7 +67,6 @@ export function initDrawLayer(map) {
                     geometry: new Point(Coord), //几何信息
                     name: output,
                 });
-
                 lastPolygonLabelFeature.setStyle(
                     createLabelStyle(lastPolygonLabelFeature, 0, 0)
                 );
@@ -79,7 +78,7 @@ export function initDrawLayer(map) {
                     );
                 }
                 Coord = geom.getLastCoordinate();
-                //新建一个要素ol.Feature
+                // 新建一个要素ol.Feature
                 lastLengthLabelFeature = new Feature({
                     geometry: new Point(Coord), //几何信息
                     name: output,
@@ -87,7 +86,7 @@ export function initDrawLayer(map) {
                 lastLengthLabelFeature.setStyle(
                     createLabelStyle(lastLengthLabelFeature, 35, -10)
                 );
-                //设置要素样式
+                // 设置要素样式
                 drawSource.addFeature(lastLengthLabelFeature);
             }
 
