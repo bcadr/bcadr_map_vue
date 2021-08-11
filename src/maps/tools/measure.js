@@ -274,3 +274,7 @@ export function measureClear(map) {
     sketch = null;
     output = "0";
 }
+
+export function interactionClear(map) {
+    map.removeInteraction(draw);
+}

@@ -1,17 +1,14 @@
-import {viewFlyTo} from "../common/flyTo.js"
+import voronoi from '@turf/voronoi';
+import buffer from '@turf/buffer';
+import GeoJSON from "ol/format/GeoJSON";
+import Vector from "ol/source/Vector";
+import VectorLayer from "ol/layer/Vector";
+import style from "ol/style/Style";
+import stroke from "ol/style/Stroke";
+import Fill from "ol/style/Fill";
+import Circle from "ol/style/Circle";
 
-import voronoi from '@turf/voronoi'
-import buffer from '@turf/buffer'
-
-import GeoJSON from "ol/format/GeoJSON"
-import Vector from "ol/source/Vector"
-import VectorLayer from "ol/layer/Vector"
-import style from "ol/style/Style"
-import stroke from "ol/style/Stroke"
-import Fill from "ol/style/Fill"
-import Circle from "ol/style/Circle"
-import * as olProj from 'ol/proj';
-
+import {viewFlyTo} from "../common/flyTo.js";
 let voronoiData;
 let voronoiLayer;
 

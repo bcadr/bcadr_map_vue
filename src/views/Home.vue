@@ -10,10 +10,6 @@
             >
             <a-button @click="delPlane">关闭迁徙图</a-button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a-button @click="mDistance">测距</a-button>
-            <a-button @click="mArea">测面</a-button>
-            <a-button @click="mClear">清除</a-button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
             <a-button @click="addPointBuffer">点缓冲区分析</a-button>
             <a-button @click="addLineBuffer">线缓冲区分析</a-button>
             <a-button @click="addPolygonBuffer">面缓冲区分析</a-button>
@@ -34,18 +30,13 @@
             <a-button @click="addCluster">添加聚合图层</a-button>
             <a-button @click="delCluster">删除聚合图层</a-button>
         </div>
+        <leftPanel ref="leftPanel"></leftPanel>
     </div>
 </template>
 
 <script>
 import { initMap } from "../maps/map.js";
 import { addEcharts, delEcharts } from "../maps/echarts/index.js";
-import {
-    initDrawLayer,
-    measureDistance,
-    measureArea,
-    measureClear,
-} from "../maps/tools/measure.js";
 import {
     pointBuffer,
     lineBuffer,
@@ -63,6 +54,21 @@ import {
 
 import { addClusterLayer, delClusterLayer } from "../maps/extention/cluster.js";
 
+//引入组件
+const leftPanel = () => ({
+  // 需要加载的组件 (应该是一个 `Promise` 对象)
+  component: import('./maps/leftPanel.vue'),
+  // 异步组件加载时使用的组件
+//   loading: LoadingComponent,
+  // 加载失败时使用的组件
+//   error: ErrorComponent,
+  // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+  delay: 0,
+  // 如果提供了超时时间且组件加载也超时了，
+  // 则使用加载失败时使用的组件。默认值是：`Infinity`
+  timeout: 3000
+})
+
 export default {
     name: "Home",
     data() {
@@ -75,23 +81,15 @@ export default {
             roadTimer: null,
         };
     },
-    components: {},
+    components: {
+        leftPanel
+    },
     mounted: function () {
         //初始化mao对象
-        this.map = initMap();
+        initMap();
         // 添加绘制图层
-        initDrawLayer(this.map);
+        // initDrawLayer(window.map);
         // 地图右键监听事件
-        this.map.getViewport().oncontextmenu =  (e)=> {
-            e.preventDefault();
-        };
-        this.map.getViewport().onmousedown =  (e)=> {
-            if (e.button == 2) {
-                console.log("222");
-            } else if (e.button == 1) {
-                console.log("111");
-            }
-        };
 
 
 
@@ -102,46 +100,37 @@ export default {
     methods: {
         addPlane() {
             this.isDisabledPlane = true;
-            addEcharts(this.map);
+            addEcharts(window.map);
         },
         delPlane() {
             this.isDisabledPlane = false;
             delEcharts();
         },
-        mDistance() {
-            measureDistance(this.map);
-        },
-        mArea() {
-            measureArea(this.map);
-        },
-        mClear() {
-            measureClear(this.map);
-        },
         addPointBuffer() {
-            pointBuffer(this.map);
+            pointBuffer(window.map);
         },
         addLineBuffer() {
-            lineBuffer(this.map);
+            lineBuffer(window.map);
         },
         addPolygonBuffer() {
-            polygonBuffer(this.map);
+            polygonBuffer(window.map);
         },
         delBuffer() {
-            delBuffer(this.map);
+            delBuffer(window.map);
         },
         addVoronoi() {
             this.isDisabledVoronoi = true;
-            addVoronoiLayer(this.map);
+            addVoronoiLayer(window.map);
         },
         delVoronoi() {
             this.isDisabledVoronoi = false;
-            delVoronoiLayer(this.map);
+            delVoronoiLayer(window.map);
         },
         addRoadAnalysis() {
             let that = this;
             this.isDisabledRoad = true;
-            viewFlyToBcadr(this.map);
-            addRoad(this.map);
+            viewFlyToBcadr(window.map);
+            addRoad(window.map);
             this.roadTimer = setInterval(function () {
                 delRoad(that.map);
                 addRoad(that.map);
@@ -149,14 +138,14 @@ export default {
         },
         delRoadAnalysis() {
             clearInterval(this.roadTimer);
-            delRoad(this.map);
+            delRoad(window.map);
             this.isDisabledRoad = false;
         },
         addPoint() {
-            addInteractions(this.map);
+            addInteractions(window.map);
         },
         delPoint() {
-            removeInteraction(this.map);
+            removeInteraction(window.map);
         },
         addCluster() {
             addClusterLayer();

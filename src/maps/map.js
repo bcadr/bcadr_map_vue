@@ -23,18 +23,14 @@ import Zoom from 'ol/control/Zoom';
 import { TdtLayers, ArcGisLayers } from './config/layerConfig';
 
 export function initMap() {
-
     // 天地图wmts最新数据源
-    var projection = get("EPSG:4326");
-    var projectionExtent = projection.getExtent();
-    var size = getWidth(projectionExtent) / 256;
-    var resolutions = [];
-    for (var z = 2; z < 19; ++z) {
+    let projection = get("EPSG:4326");
+    let projectionExtent = projection.getExtent();
+    let size = getWidth(projectionExtent) / 256;
+    let resolutions = [];
+    for (let z = 2; z < 19; ++z) {
         resolutions[z] = size / Math.pow(2, z);
     }
-
-
-
     let map = new Map({
         target: 'map',
         layers: [
@@ -320,5 +316,5 @@ export function initMap() {
         console.log('"lon":' + e.coordinate[0] + ',"lat":' + e.coordinate[1]);
     });
     window.map = map;
-    return map;
+    // return map;
 }
