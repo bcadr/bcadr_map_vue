@@ -5,7 +5,6 @@ import GeoJSON from "ol/format/GeoJSON"
 import Vector from "ol/source/Vector"
 import VectorLayer from "ol/layer/Vector"
 import { viewFlyToBcadr } from "../common/flyTo.js"
-import * as olProj from 'ol/proj';
 
 // 定义渲染的缓冲区图层
 let pointSource
@@ -26,7 +25,8 @@ export function pointBuffer(map) {
         map.removeLayer(polygonLayer);
     }
     //创建缓冲数据
-    let points = point([116.53898130231798, 39.76589466010563]);
+    
+    let points = point([116.53852166345372,39.76504216517435]);
     let pointBuffer = buffer(points, 200, { units: 'meters' });
     //创建数据geojson对象和数据源对象
     let format = new GeoJSON();
@@ -34,15 +34,17 @@ export function pointBuffer(map) {
     //读取geojson数据
     let pointFeature = format.readFeature(points);
     let pointBufferFeature = format.readFeature(pointBuffer);
-    pointFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-    pointBufferFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    // pointFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    // pointBufferFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    
     //将数据添加数据源的
     pointSource.addFeature(pointFeature);
     pointSource.addFeature(pointBufferFeature);
     //添加图层
     pointLayer = new VectorLayer({ source: pointSource })
     map.addLayer(pointLayer);
-    viewFlyToBcadr(map, olProj.transform([116.53898130231798, 39.76589466010563], 'EPSG:4326', 'EPSG:3857'));
+    // viewFlyToBcadr(map, olProj.transform([116.53898130231798, 39.76589466010563], 'EPSG:4326', 'EPSG:3857'));
+    viewFlyToBcadr(map);
 }
 
 export function lineBuffer(map) {
@@ -65,8 +67,8 @@ export function lineBuffer(map) {
     //读取geojson数据
     let lineFeature = format.readFeature(line);
     let lineBufferFeature = format.readFeature(lineBuffer);
-    lineFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-    lineBufferFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    // lineFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    // lineBufferFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
     //将数据添加数据源的
     lineSource.addFeature(lineFeature);
     lineSource.addFeature(lineBufferFeature);
@@ -94,8 +96,8 @@ export function polygonBuffer(map) {
     //读取geojson数据
     let polygonFeature = format.readFeature(polygons);
     let polygonBufferFeature = format.readFeature(polygonBuffer);
-    polygonFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
-    polygonBufferFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    // polygonFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+    // polygonBufferFeature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
     //将数据添加数据源的
     polygonSource.addFeature(polygonFeature);
     polygonSource.addFeature(polygonBufferFeature);

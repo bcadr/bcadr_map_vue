@@ -1,10 +1,17 @@
 import "ol-ext/dist/ol-ext.css";
 import AnimatedCluster from 'ol-ext/layer/AnimatedCluster';
+
+import SelectCluster from 'ol-ext/interaction/SelectCluster';
+
+import {convexHull} from 'ol/coordinate';
+
 import VectorSource from 'ol/source/Vector';
-import { Fill, Stroke, Circle, Icon, Style, Text,} from 'ol/style';
+import { Fill, Stroke, Circle, Icon, Style, Text, } from 'ol/style';
 import Cluster from 'ol/source/Cluster';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
+import Polygon from 'ol/geom/Polygon';
+
 
 import marker from '@/assets/images/map/marker.png'
 let clusterSource;
@@ -35,7 +42,7 @@ function getStyle(feature) {
                     src: marker
                 }),
             })
-        }else {
+        } else {
             var color = size > 25 ? "192,0,0" : size > 8 ? "255,128,0" : "0,128,0";
             var radius = Math.max(8, Math.min(size * 0.75, 20));
             var dashs = 2 * Math.PI * radius / 6;
@@ -63,7 +70,7 @@ function getStyle(feature) {
                 })
             });
         }
-        
+
     }
     return style;
 }
@@ -85,8 +92,99 @@ export function addClusterLayer() {
     window.map.addLayer(clusterLayer);
     // add 2000 features
     addFeatures(2000);
+    addClusterAction();
 }
 
 export function delClusterLayer() {
     window.map.removeLayer(clusterLayer);
 }
+
+
+function addClusterAction() {
+    var img = new Circle({
+        radius: 5,
+        stroke: new Stroke({
+            color: "rgba(0,255,255,1)",
+            width: 1
+        }),
+        fill: new Fill({
+            color: "rgba(0,255,255,0.3)"
+        })
+    });
+    var style0 = new Style({
+        image: img
+    });
+   /*  var style1 = new Style({
+        image: img,
+        // Draw a link beetween points (or not)
+        stroke: new Stroke({
+            color: "#fff",
+            width: 1
+        })
+    }); */
+    // Select interaction to spread cluster out and select features
+    var selectCluster = new SelectCluster({
+        // Point radius: to calculate distance between the features
+        pointRadius: 7,
+        // circleMaxObjects: 40,
+        // spiral: false,
+        /* animate: document.getElementById("animatesel").prop('checked'),*/
+        // Feature style when it springs apart
+        featureStyle: function () {
+            // return [document.getElementById("haslink").prop('checked') ? style1 : style0]
+            return [style0]
+        }, 
+        // selectCluster: false,	// disable cluster selection
+        // Style to draw cluster when selected
+        style: function (f, res) {
+            var cluster = f.get('features');
+            if (cluster.length > 1) {
+                var s = [getStyle(f, res)];
+                // if (document.getElementById("convexhull").prop("checked") && convexHull) {
+                if (convexHull) {
+                    var coords = [];
+                    for (let i = 0; i < cluster.length; i++) coords.push(cluster[i].getGeometry().getFirstCoordinate());
+                    var chull = convexHull(coords);
+                    s.push(new Style({
+                        stroke: new Stroke({ color: "rgba(0,0,192,0.5)", width: 2 }),
+                        fill: new Fill({ color: "rgba(0,0,192,0.3)" }),
+                        geometry: new Polygon([chull]),
+                        zIndex: 1
+                    }));
+                }
+                return s;
+            } else {
+                return [
+                    new Style({
+                        image: new Circle({
+                            stroke: new Stroke({ color: "rgba(0,0,192,0.5)", width: 2 }),
+                            fill: new Fill({ color: "rgba(0,0,192,0.3)" }),
+                            radius: 5
+                        })
+                    })];
+            }
+        }
+    });
+    window.map.addInteraction(selectCluster);
+
+    // On selected => get feature in cluster and show info
+    selectCluster.getFeatures().on(['add'], function (e) {
+        var c = e.element.get('features');
+        if (c.length == 1) {
+            var feature = c[0];
+            console.log(feature);
+            console.log(feature.get('id'));
+            // document.getElementsByClassName("infos").html("One feature selected...<br/>(id=" + feature.get('id') + ")");
+        } else {
+            // document.getElementsByClassName("infos").text("Cluster (" + c.length + " features)");
+        }
+    })
+    selectCluster.getFeatures().on(['remove'], function () {
+
+        // document.getElementsByClassName("infos").html("");
+        
+    })
+
+
+}
+

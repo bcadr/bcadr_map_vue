@@ -29,13 +29,10 @@
             >
             <a-button @click="delRoadAnalysis">取消道路分析</a-button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a-button @click="addPoint">绘制点</a-button
-            >
+            <a-button @click="addPoint">绘制点</a-button>
             <a-button @click="delPoint">退出绘制</a-button>
-            <a-button @click="addCluster">添加聚合图层</a-button
-            >
+            <a-button @click="addCluster">添加聚合图层</a-button>
             <a-button @click="delCluster">删除聚合图层</a-button>
-
         </div>
     </div>
 </template>
@@ -55,16 +52,16 @@ import {
     polygonBuffer,
     delBuffer,
 } from "../maps/turf/buffer.js";
-import {
-    addVoronoiLayer,
-    delVoronoiLayer,
-} from "../maps/turf/voronoi.js";
+import { addVoronoiLayer, delVoronoiLayer } from "../maps/turf/voronoi.js";
 import { addRoad, delRoad } from "../maps/road/road.js";
 import { viewFlyToBcadr } from "../maps/common/flyTo.js";
 
-import {addInteractions,removeInteraction} from "../maps/tools/vectorLabel.js"
+import {
+    addInteractions,
+    removeInteraction,
+} from "../maps/tools/vectorLabel.js";
 
-import {addClusterLayer,delClusterLayer} from '../maps/extention/cluster.js'
+import { addClusterLayer, delClusterLayer } from "../maps/extention/cluster.js";
 
 export default {
     name: "Home",
@@ -84,6 +81,23 @@ export default {
         this.map = initMap();
         // 添加绘制图层
         initDrawLayer(this.map);
+        // 地图右键监听事件
+        this.map.getViewport().oncontextmenu =  (e)=> {
+            e.preventDefault();
+        };
+        this.map.getViewport().onmousedown =  (e)=> {
+            if (e.button == 2) {
+                console.log("222");
+            } else if (e.button == 1) {
+                console.log("111");
+            }
+        };
+
+
+
+
+
+       
     },
     methods: {
         addPlane() {
@@ -149,7 +163,7 @@ export default {
         },
         delCluster() {
             delClusterLayer();
-        }
+        },
     },
 };
 </script>

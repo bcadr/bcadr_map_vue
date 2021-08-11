@@ -102,7 +102,7 @@ function updateView(map,voronoiData) {
     for (let i = 0; i < features.length; i++) {
         let oljson = new GeoJSON();
         let feature = oljson.readFeature(features[i]);
-        feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+        // feature.getGeometry().transform('EPSG:4326', 'EPSG:3857');
         source.addFeature(feature);
     }
     
@@ -122,7 +122,7 @@ export function addVoronoiLayer(map) {
             convertDataToGeoJson(json);
             updateView(map,voronoiData);
         });
-        viewFlyTo(map,olProj.fromLonLat([116.53898130231798, 39.76589466010563]));
+        viewFlyTo(map,[116.53898130231798, 39.76589466010563]);
 }
 
 export function delVoronoiLayer(map) {

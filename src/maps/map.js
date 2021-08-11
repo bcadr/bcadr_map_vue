@@ -6,6 +6,11 @@ import Map from "ol/Map";
 import LayerGroup from "ol/layer/Group";
 import TileLayer from "ol/layer/Tile";
 import XYZ from "ol/source/XYZ";
+import WMTS from 'ol/source/WMTS';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
+import { getTopLeft, getWidth } from 'ol/extent';
+import { get } from 'ol/proj';
+
 import View from "ol/View"
 import * as olProj from "ol/proj";
 import * as olControl from 'ol/control';
@@ -15,10 +20,21 @@ import ZoomSlider from 'ol/control/ZoomSlider';
 import * as olCoordinate from 'ol/coordinate';
 import Zoom from 'ol/control/Zoom';
 
-import { TdtLayers, ArcGisLayers } from '../../public/config/SysConfig';
-
+import { TdtLayers, ArcGisLayers } from './config/layerConfig';
 
 export function initMap() {
+
+    // 天地图wmts最新数据源
+    var projection = get("EPSG:4326");
+    var projectionExtent = projection.getExtent();
+    var size = getWidth(projectionExtent) / 256;
+    var resolutions = [];
+    for (var z = 2; z < 19; ++z) {
+        resolutions[z] = size / Math.pow(2, z);
+    }
+
+
+
     let map = new Map({
         target: 'map',
         layers: [
@@ -85,9 +101,20 @@ export function initMap() {
                             new TileLayer({
                                 title: TdtLayers.layers[2].name,
                                 visible: false,
-                                source: new XYZ({
+                                source: new WMTS({
                                     crossOrigin: "anonymous",
                                     url: TdtLayers.layers[2].url,
+                                    layer: TdtLayers.layers[2].type,
+                                    style: "default",
+                                    matrixSet: "c",
+                                    format: "tiles",
+                                    wrapX: true,
+                                    tileGrid: new WMTSTileGrid({
+                                        origin: getTopLeft(projectionExtent),
+                                        resolutions: resolutions,
+                                        matrixIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                                    })
+
                                 }),
                                 ratio: 1,
                                 params: { LAYERS: 'show:0' },
@@ -97,9 +124,19 @@ export function initMap() {
                             new TileLayer({
                                 title: TdtLayers.layers[3].name,
                                 visible: false,
-                                source: new XYZ({
+                                source: new WMTS({
                                     crossOrigin: "anonymous",
                                     url: TdtLayers.layers[3].url,
+                                    layer: TdtLayers.layers[3].type,
+                                    style: "default",
+                                    matrixSet: "c",
+                                    format: "tiles",
+                                    wrapX: true,
+                                    tileGrid: new WMTSTileGrid({
+                                        origin: getTopLeft(projectionExtent),
+                                        resolutions: resolutions,
+                                        matrixIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                                    })
                                 }),
                                 ratio: 1,
                                 params: { LAYERS: 'show:0' },
@@ -119,6 +156,16 @@ export function initMap() {
                                 source: new XYZ({
                                     crossOrigin: "anonymous",
                                     url: TdtLayers.layers[4].url,
+                                    layer: TdtLayers.layers[4].type,
+                                    style: "default",
+                                    matrixSet: "c",
+                                    format: "tiles",
+                                    wrapX: true,
+                                    tileGrid: new WMTSTileGrid({
+                                        origin: getTopLeft(projectionExtent),
+                                        resolutions: resolutions,
+                                        matrixIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                                    })
                                 }),
                                 ratio: 1,
                                 params: { LAYERS: 'show:0' },
@@ -131,6 +178,16 @@ export function initMap() {
                                 source: new XYZ({
                                     crossOrigin: "anonymous",
                                     url: TdtLayers.layers[5].url,
+                                    layer: TdtLayers.layers[5].type,
+                                    style: "default",
+                                    matrixSet: "c",
+                                    format: "tiles",
+                                    wrapX: true,
+                                    tileGrid: new WMTSTileGrid({
+                                        origin: getTopLeft(projectionExtent),
+                                        resolutions: resolutions,
+                                        matrixIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                                    })
                                 }),
                                 ratio: 1,
                                 params: { LAYERS: 'show:0' },
@@ -147,9 +204,19 @@ export function initMap() {
                             new TileLayer({
                                 title: TdtLayers.layers[0].name,
                                 visible: true,
-                                source: new XYZ({
+                                source: new WMTS({
                                     crossOrigin: "anonymous",
                                     url: TdtLayers.layers[0].url,
+                                    layer: TdtLayers.layers[0].type,
+                                    style: "default",
+                                    matrixSet: "c",
+                                    format: "tiles",
+                                    wrapX: true,
+                                    tileGrid: new WMTSTileGrid({
+                                        origin: getTopLeft(projectionExtent),
+                                        resolutions: resolutions,
+                                        matrixIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                                    })
                                 }),
                                 ratio: 1,
                                 params: { LAYERS: 'show:0' },
@@ -159,9 +226,19 @@ export function initMap() {
                             new TileLayer({
                                 title: TdtLayers.layers[1].name,
                                 visible: true,
-                                source: new XYZ({
+                                source: new WMTS({
                                     crossOrigin: "anonymous",
                                     url: TdtLayers.layers[1].url,
+                                    layer: TdtLayers.layers[1].type,
+                                    style: "default",
+                                    matrixSet: "c",
+                                    format: "tiles",
+                                    wrapX: true,
+                                    tileGrid: new WMTSTileGrid({
+                                        origin: getTopLeft(projectionExtent),
+                                        resolutions: resolutions,
+                                        matrixIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                                    })
                                 }),
                                 ratio: 1,
                                 params: { LAYERS: 'show:0' },

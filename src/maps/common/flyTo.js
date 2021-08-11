@@ -1,4 +1,4 @@
-import * as olProj from "ol/proj";
+// import * as olProj from "ol/proj";
 
 export function viewFlyTo(map,location) {
     let view = map.getView();
@@ -36,5 +36,5 @@ export function viewFlyTo(map,location) {
 }
 
 export function viewFlyToBcadr(map){
-    viewFlyTo(map,olProj.fromLonLat([116.53898130231798, 39.76589466010563]));
+    viewFlyTo(map,[116.53898130231798, 39.76589466010563]);
 }

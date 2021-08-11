@@ -1,3 +1,4 @@
+
 const TdtLayers = {
     title: '天地图',
     // 天地图图层组是否展开
@@ -6,48 +7,48 @@ const TdtLayers = {
         {
             index: 0,
             text: 'tdt',
-            url: "https://t0.tianditu.gov.cn/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=6d1185c1644e0ba1f028a167da5f6b06",
-            type: 'imagelayer',
+            url: "http://t{0-6}.tianditu.gov.cn/vec_c/wmts?tk=6d1185c1644e0ba1f028a167da5f6b06",
+            type: 'vec',
             name: '天地图',
             showincontrol: true
         },
         {
             index: 1,
             text: 'tdtLabel',
-            url: "https://t0.tianditu.gov.cn/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=6d1185c1644e0ba1f028a167da5f6b06",
-            type: 'imagelayer',
+            url: "http://t{0-6}.tianditu.gov.cn/cva_c/wmts?tk=6d1185c1644e0ba1f028a167da5f6b06",
+            type: 'cva',
             name: '天地图标注',
             showincontrol: true
         },
         {
             index: 2,
             text: 'tdtImg',
-            url: "https://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=6d1185c1644e0ba1f028a167da5f6b06",
-            type: 'imagelayer',
+            url: "http://t{0-6}.tianditu.gov.cn/img_c/wmts?tk=6d1185c1644e0ba1f028a167da5f6b06",
+            type: 'img',
             name: '天地图影像',
             showincontrol: true
         },
         {
             index: 3,
             text: 'tdtImgLabel',
-            url: "https://t0.tianditu.gov.cn/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=6d1185c1644e0ba1f028a167da5f6b06",
-            type: 'imagelayer',
+            url: "http://t{0-6}.tianditu.gov.cn/cia_c/wmts?tk=6d1185c1644e0ba1f028a167da5f6b06",
+            type: 'cia',
             name: '天地图影像标注',
             showincontrol: true
         },
         {
             index: 4,
             text: 'tdt',
-            url: "https://t0.tianditu.gov.cn/DataServer?T=ter_w&x={x}&y={y}&l={z}&tk=6d1185c1644e0ba1f028a167da5f6b06",
-            type: 'imagelayer',
+            url: "http://t{0-6}.tianditu.gov.cn/ter_c/wmts?tk=6d1185c1644e0ba1f028a167da5f6b06",
+            type: 'ter',
             name: '天地图地形图',
             showincontrol: true
         },
         {
             index: 5,
             text: 'tdtLabel',
-            url: "https://t0.tianditu.gov.cn/DataServer?T=cta_w&x={x}&y={y}&l={z}&tk=6d1185c1644e0ba1f028a167da5f6b06",
-            type: 'imagelayer',
+            url: "http://t{0-6}.tianditu.gov.cn/cta_c/wmts?tk=6d1185c1644e0ba1f028a167da5f6b06",
+            type: 'cta',
             name: '天地图地形图标注',
             showincontrol: true
         },
